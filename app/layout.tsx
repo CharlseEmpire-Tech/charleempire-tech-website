@@ -26,13 +26,38 @@ export const metadata: Metadata = {
   generator: 'v0.app',
 }
 
+const themeInitScript = `
+(() => {
+  try {
+    const savedTheme = localStorage.getItem('theme');
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const shouldUseDark = savedTheme === 'dark' || (!savedTheme && systemPrefersDark);
+    const root = document.documentElement;
+    root.classList.toggle('dark', shouldUseDark);
+    root.style.colorScheme = shouldUseDark ? 'dark' : 'light';
+  } catch {
+    // Ignore errors and keep default theme.
+  }
+})();
+`;
+
+/**
+ * The root layout component for the app.
+ * It sets up the font, background, and analytics.
+ *
+ * @param {React.ReactNode} children - The children of the component.
+ * @returns {JSX.Element} - The root layout component.
+ */
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="bg-background">
+    <html lang="en" className="bg-background" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
       <body className={`${instrumentSans.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} font-sans antialiased bg-background`}>
         {children}
         <Analytics />

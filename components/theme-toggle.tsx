@@ -21,6 +21,7 @@ export function ThemeToggle() {
 
   const applyTheme = (dark: boolean) => {
     const html = document.documentElement;
+    html.style.colorScheme = dark ? "dark" : "light";
     if (dark) {
       html.classList.add("dark");
       localStorage.setItem("theme", "dark");
