@@ -12,7 +12,7 @@ interface ProductCardProps {
 
 export function ProductCard({ product }: ProductCardProps) {
   return (
-    <Link href={`/product/${product.id}`}>
+    <Link href={`/products/${product.id}`}>
       <div className="group relative h-full overflow-hidden rounded-2xl border border-primary/20 bg-gradient-to-br from-card to-background/50 transition-all duration-500 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/10">
         {/* Hover glow effect */}
         <div className="absolute inset-0 bg-gradient-to-br from-primary/0 via-primary/0 to-primary/0 group-hover:from-primary/10 group-hover:via-primary/5 group-hover:to-primary/0 transition-all duration-500 pointer-events-none" />

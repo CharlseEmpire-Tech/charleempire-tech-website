@@ -60,7 +60,7 @@ export function ProductsSection() {
           {featuredProducts.map((product, index) => (
             <Link
               key={product.id}
-              href={`/product/${product.id}`}
+              href={`/products/${product.id}`}
               onMouseEnter={() => setHoveredId(product.id)}
               onMouseLeave={() => setHoveredId(null)}
               className={`group relative transition-all duration-500 ${
@@ -147,7 +147,7 @@ export function ProductsSection() {
           }`}
         >
           <Link
-            href="/product"
+            href="/products"
             className="group inline-flex items-center gap-3 px-8 py-4 rounded-full border border-primary/30 text-primary font-mono text-sm hover:bg-primary/10 hover:border-primary/60 transition-all duration-300 gold-glow-hover"
           >
             See All Products

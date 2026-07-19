@@ -249,7 +249,7 @@ export const products: Product[] = [
         name: "Android",
         type: "android",
         version: "1.0.0",
-        size: "68 MB",
+        size: "55 MB",
         requires: "Android 8.0 or later",
         downloadLink: "#", // TODO: replace with the real Android download link
       },

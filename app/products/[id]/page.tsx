@@ -70,7 +70,7 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
           <div className="text-center">
             <h1 className="text-4xl font-display mb-4">Product not found</h1>
             <Link
-              href="/product"
+              href="/products"
               className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
@@ -91,7 +91,7 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
         <section className="relative pt-28 pb-8 lg:pt-32 lg:pb-12 border-b border-primary/10">
           <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
             <Link
-              href="/product"
+              href="/products"
               className="inline-flex items-center gap-2 text-foreground/60 hover:text-foreground transition-colors mb-8"
             >
               <ArrowLeft className="w-4 h-4" />
@@ -320,7 +320,7 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
                   .map((relatedProduct) => (
                     <Link
                       key={relatedProduct.id}
-                      href={`/product/${relatedProduct.id}`}
+                      href={`/products/${relatedProduct.id}`}
                       className="group relative p-6 rounded-xl border border-primary/20 bg-muted/30 hover:border-primary/50 transition-all"
                     >
                       <div className="flex items-start justify-between mb-4">
@@ -375,7 +375,7 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
                 </Button>
               )}
               <Link
-                href="/product"
+                href="/products"
                 className="px-8 py-3 border border-primary/30 rounded-lg font-semibold hover:bg-primary/5 transition-colors"
               >
                 Browse More Products
