@@ -91,7 +91,7 @@ export function AboutSection() {
           >
             <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5 z-10" />
             <Image
-              src="/founder.jpg"
+              src="/founder.jpeg"
               alt="CharlseEmpire Founder"
               fill
               className="object-cover"

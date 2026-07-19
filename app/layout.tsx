@@ -23,7 +23,6 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: 'CharlseEmpire Tech - African Tech Innovation',
   description: 'Building the future of African technology with groundbreaking fintech, lending, and AI solutions. CharlseEmpire Pay, Njangi Platform, and AI-powered innovation.',
-  generator: 'v0.app',
 }
 
 const themeInitScript = `

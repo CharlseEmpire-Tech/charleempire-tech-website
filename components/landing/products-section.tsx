@@ -2,40 +2,13 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
-
-const products = [
-  {
-    id: 1,
-    title: "CharlseEmpire Pay",
-    description: "Revolutionary fintech platform enabling seamless payments and financial services across Africa.",
-    image: "/product-pay.jpg",
-    features: ["Instant transfers", "Low fees", "Multi-currency"],
-    color: "from-primary/20 to-primary/5",
-  },
-  {
-    id: 2,
-    title: "Njangi Platform",
-    description: "Community lending platform connecting savers and borrowers for collective financial growth.",
-    image: "/product-njangi.jpg",
-    features: ["Group lending", "Savings circles", "Financial inclusion"],
-    color: "from-primary/15 to-primary/0",
-  },
-  {
-    id: 3,
-    title: "AI Solutions",
-    description: "Intelligent automation and predictive analytics transforming African business operations.",
-    image: "/product-ai.jpg",
-    features: ["Smart predictions", "Automation", "Real-time insights"],
-    color: "from-primary/10 to-primary/0",
-    badge: "Coming Soon",
-  },
-];
+import { products } from "@/lib/products";
 
 export function ProductsSection() {
   const [isVisible, setIsVisible] = useState(false);
-  const [hoveredId, setHoveredId] = useState<number | null>(null);
+  const [hoveredId, setHoveredId] = useState<string | null>(null);
 
   useEffect(() => {
     setIsVisible(true);
@@ -70,10 +43,11 @@ export function ProductsSection() {
         </div>
 
         {/* Products grid */}
-        <div className="grid lg:grid-cols-3 gap-6 lg:gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {products.map((product, index) => (
-            <div
+            <Link
               key={product.id}
+              href={`/product/${product.id}`}
               onMouseEnter={() => setHoveredId(product.id)}
               onMouseLeave={() => setHoveredId(null)}
               className={`group relative transition-all duration-500 ${
@@ -110,7 +84,7 @@ export function ProductsSection() {
                 <div className="mb-6 w-full h-40 rounded-lg overflow-hidden relative">
                   <Image
                     src={product.image}
-                    alt={product.title}
+                    alt={product.name}
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
@@ -118,7 +92,7 @@ export function ProductsSection() {
 
                 {/* Title and description */}
                 <h3 className="text-2xl lg:text-3xl font-display mb-3 text-foreground">
-                  {product.title}
+                  {product.name}
                 </h3>
                 <p className="text-base text-foreground/70 mb-6 leading-relaxed flex-grow">
                   {product.description}
@@ -126,7 +100,7 @@ export function ProductsSection() {
 
                 {/* Features */}
                 <div className="mb-6 space-y-2">
-                  {product.features.map((feature) => (
+                  {product.features.slice(0, 3).map((feature) => (
                     <div key={feature} className="flex items-center gap-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-primary" />
                       <span className="text-sm text-foreground/60">{feature}</span>
@@ -135,10 +109,10 @@ export function ProductsSection() {
                 </div>
 
                 {/* CTA */}
-                <button className="inline-flex items-center gap-2 text-primary font-mono text-sm transition-all duration-300 group-hover:gap-3">
-                  {product.badge ? "Coming Soon" : "Explore"}
+                <span className="inline-flex items-center gap-2 text-primary font-mono text-sm transition-all duration-300 group-hover:gap-3">
+                  {product.comingSoon ? "Coming Soon" : "Explore"}
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                </button>
+                </span>
               </div>
 
               {/* Hover animation background */}
@@ -149,8 +123,23 @@ export function ProductsSection() {
                 background: `radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(212, 175, 55, 0.1) 0%, transparent 80%)`,
               }}
               />
-            </div>
+            </Link>
           ))}
+        </div>
+
+        {/* See all products */}
+        <div
+          className={`mt-16 flex justify-center transition-all duration-700 delay-300 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+          }`}
+        >
+          <Link
+            href="/product"
+            className="group inline-flex items-center gap-3 px-8 py-4 rounded-full border border-primary/30 text-primary font-mono text-sm hover:bg-primary/10 hover:border-primary/60 transition-all duration-300 gold-glow-hover"
+          >
+            See All Products
+            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+          </Link>
         </div>
       </div>
     </section>
