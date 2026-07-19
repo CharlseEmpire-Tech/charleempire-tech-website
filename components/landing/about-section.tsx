@@ -94,7 +94,7 @@ export function AboutSection() {
               src="/founder.jpeg"
               alt="CharlseEmpire Founder"
               fill
-              className="object-cover"
+              className="object-cover object-top"
               placeholder="blur"
               blurDataURL="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 500'%3E%3Crect fill='%23daa520' width='400' height='500'/%3E%3C/svg%3E"
             />

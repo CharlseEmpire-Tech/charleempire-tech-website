@@ -215,9 +215,9 @@ export const products: Product[] = [
     id: "phonkdrift",
     name: "PhonkDrift",
     description:
-      "Premium phonk music streaming app with a real-time drifter community, wrapped in a dark neon red/purple identity.",
+      "Premium phonk music streaming experience with a vibrant real-time community, wrapped in a dark neon-inspired identity.",
     longDescription:
-      "PhonkDrift is a premium, phonk-focused music streaming app for Android and iOS built with Flutter, backed by a Go microservices platform speaking gRPC. Beyond streaming, it features a real-time community chat where drifters hang out, react, and build reputation through join-order badges — all wrapped in a dark, neon red/purple premium visual identity.",
+      "PhonkDrift is a premium music streaming app dedicated to phonk culture, available on Android and iOS. Discover trending tracks, build playlists, and enjoy a full-featured listening experience — then step into the live community where drifters hang out, react, and earn reputation through exclusive founding-member badges. All of it is wrapped in a sleek, dark, neon-accented design built to feel premium from the first tap.",
     category: "music",
     categoryLabel: "Music Streaming",
     image: "/product-phonk.png",
