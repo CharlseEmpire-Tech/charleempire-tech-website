@@ -87,8 +87,8 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
     <>
       <Navigation />
       <main className="min-h-screen bg-background overflow-x-hidden">
-        {/* Header */}
-        <section className="relative py-8 lg:py-12 border-b border-primary/10">
+        {/* Header — top padding clears the fixed navigation */}
+        <section className="relative pt-28 pb-8 lg:pt-32 lg:pb-12 border-b border-primary/10">
           <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
             <Link
               href="/product"
@@ -217,6 +217,17 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
                         <div className="font-semibold text-sm">{platform.name}</div>
                         <div className="text-xs opacity-60">v{platform.version}</div>
                       </div>
+                      {platform.comingSoon && (
+                        <span
+                          className={`px-2 py-0.5 text-[10px] font-mono rounded-full ${
+                            selectedPlatform?.id === platform.id
+                              ? "bg-primary-foreground/20 text-primary-foreground"
+                              : "bg-primary/20 text-primary"
+                          }`}
+                        >
+                          Soon
+                        </span>
+                      )}
                     </button>
                   ))}
                 </div>
@@ -254,7 +265,7 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
                     )}
                   </div>
 
-                  {product.comingSoon ? (
+                  {product.comingSoon || selectedPlatform.comingSoon ? (
                     <>
                       <Button
                         disabled
@@ -265,7 +276,9 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
                       </Button>
 
                       <p className="text-xs text-foreground/50 mt-4 text-center">
-                        This product is launching soon. Stay tuned!
+                        {product.comingSoon
+                          ? "This product is launching soon. Stay tuned!"
+                          : `The ${selectedPlatform.name} version is launching soon. Stay tuned!`}
                       </p>
                     </>
                   ) : (

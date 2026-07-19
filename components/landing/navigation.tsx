@@ -7,10 +7,10 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import Link from "next/link";
 
 const navLinks = [
-  { name: "Products", href: "#products" },
-  { name: "How it works", href: "#how-it-works" },
-  { name: "About", href: "#about" },
-  { name: "Developers", href: "#developers" },
+  { name: "Products", href: "/#products" },
+  { name: "How it works", href: "/#how-it-works" },
+  { name: "About", href: "/#about" },
+  { name: "Developers", href: "/#developers" },
 ];
 
 export function Navigation() {
@@ -54,14 +54,14 @@ export function Navigation() {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-12">
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.name}
                 href={link.href}
                 className="text-sm text-foreground/70 hover:text-foreground transition-colors duration-300 relative group"
               >
                 {link.name}
                 <span className="absolute -bottom-1 left-0 w-0 h-px bg-foreground transition-all duration-300 group-hover:w-full" />
-              </a>
+              </Link>
             ))}
           </div>
 
@@ -108,7 +108,7 @@ export function Navigation() {
           {/* Navigation Links */}
           <div className="flex-1 flex flex-col justify-center gap-8">
             {navLinks.map((link, i) => (
-              <a
+              <Link
                 key={link.name}
                 href={link.href}
                 onClick={() => setIsMobileMenuOpen(false)}
@@ -120,7 +120,7 @@ export function Navigation() {
                 style={{ transitionDelay: isMobileMenuOpen ? `${i * 75}ms` : "0ms" }}
               >
                 {link.name}
-              </a>
+              </Link>
             ))}
           </div>
           

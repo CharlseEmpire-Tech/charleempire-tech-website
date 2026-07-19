@@ -25,6 +25,7 @@ export interface Platform {
   requires?: string;
   downloadLink?: string;
   icon?: string;
+  comingSoon?: boolean;
 }
 
 export const products: Product[] = [
@@ -219,7 +220,7 @@ export const products: Product[] = [
       "PhonkDrift is a premium, phonk-focused music streaming app for Android and iOS built with Flutter, backed by a Go microservices platform speaking gRPC. Beyond streaming, it features a real-time community chat where drifters hang out, react, and build reputation through join-order badges — all wrapped in a dark, neon red/purple premium visual identity.",
     category: "music",
     categoryLabel: "Music Streaming",
-    image: "/product-phonkdrift.jpg",
+    image: "/product-phonk.png",
     rating: 4.9,
     downloads: "10K+",
     color: "from-primary/20 to-primary/5",
@@ -259,7 +260,7 @@ export const products: Product[] = [
         version: "1.0.0",
         size: "74 MB",
         requires: "iOS 13.0 or later",
-        downloadLink: "#", // TODO: replace with the real iOS download link
+        comingSoon: true, // iOS version not released yet
       },
     ],
   },

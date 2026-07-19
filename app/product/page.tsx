@@ -65,8 +65,8 @@ export default function ProductsPage() {
     <>
       <Navigation />
       <main className="min-h-screen bg-background overflow-x-hidden">
-        {/* Hero section */}
-        <section className="relative py-16 lg:py-24 border-b border-primary/10">
+        {/* Hero section — top padding clears the fixed navigation */}
+        <section className="relative pt-28 pb-16 lg:pt-32 lg:pb-24 border-b border-primary/10">
           <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
             <div className="max-w-3xl mx-auto text-center mb-12">
               <span className="inline-flex items-center gap-3 text-sm font-mono text-primary mb-4">
