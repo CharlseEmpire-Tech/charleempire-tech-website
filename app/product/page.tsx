@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useState, Suspense } from "react";
+import { useEffect, useState } from "react";
 import { Search, X } from "lucide-react";
-import { products, categories, searchProducts, getProductsByCategory } from "@/lib/products";
+import { Product, categories } from "@/lib/products";
+import { fetchProducts, sortByAvailability } from "@/lib/api/products";
 import { ProductCard } from "@/components/product-card";
 import { ProductsSkeletonLoader } from "@/components/products-skeleton";
 import { Navigation } from "@/components/landing/navigation";
@@ -12,24 +13,33 @@ export default function ProductsPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [isLoading, setIsLoading] = useState(true);
-  const [filteredProducts, setFilteredProducts] = useState(products);
+  const [allProducts, setAllProducts] = useState<Product[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
 
-  // Simulate loading delay for skeleton
+  // Load products (from the backend when configured, local catalog otherwise);
+  // keep the skeleton visible briefly so the transition stays smooth
   useEffect(() => {
-    const timer = setTimeout(() => {
+    let cancelled = false;
+    Promise.all([
+      fetchProducts(),
+      new Promise((resolve) => setTimeout(resolve, 800)),
+    ]).then(([list]) => {
+      if (cancelled) return;
+      setAllProducts(sortByAvailability(list));
       setIsLoading(false);
-    }, 1800);
-
-    return () => clearTimeout(timer);
+    });
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   // Filter products based on search and category
   useEffect(() => {
-    let results = products;
+    let results = allProducts;
 
     // Apply category filter
     if (selectedCategory !== "all") {
-      results = getProductsByCategory(selectedCategory);
+      results = results.filter((product) => product.category === selectedCategory);
     }
 
     // Apply search filter
@@ -45,7 +55,7 @@ export default function ProductsPage() {
     }
 
     setFilteredProducts(results);
-  }, [searchQuery, selectedCategory]);
+  }, [searchQuery, selectedCategory, allProducts]);
 
   const handleClearSearch = () => {
     setSearchQuery("");
@@ -124,7 +134,7 @@ export default function ProductsPage() {
                 <div className="mb-8 flex items-center justify-between">
                   <p className="text-sm text-foreground/60">
                     Showing <span className="font-semibold text-foreground">{filteredProducts.length}</span> of{" "}
-                    <span className="font-semibold text-foreground">{products.length}</span> products
+                    <span className="font-semibold text-foreground">{allProducts.length}</span> products
                   </p>
                   {searchQuery && (
                     <p className="text-sm text-foreground/60">

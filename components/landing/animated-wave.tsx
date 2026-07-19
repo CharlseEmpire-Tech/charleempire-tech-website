@@ -17,11 +17,11 @@ export function AnimatedWave() {
     let time = 0;
 
     const resize = () => {
-      const dpr = window.devicePixelRatio || 1;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
       const rect = canvas.getBoundingClientRect();
       canvas.width = rect.width * dpr;
       canvas.height = rect.height * dpr;
-      ctx.scale(dpr, dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
 
     resize();
@@ -64,9 +64,21 @@ export function AnimatedWave() {
       frameRef.current = requestAnimationFrame(render);
     };
 
-    render();
+    // Only animate while the canvas is on screen
+    let isRunning = false;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting && !isRunning) {
+        isRunning = true;
+        frameRef.current = requestAnimationFrame(render);
+      } else if (!entry.isIntersecting && isRunning) {
+        isRunning = false;
+        cancelAnimationFrame(frameRef.current);
+      }
+    });
+    observer.observe(canvas);
 
     return () => {
+      observer.disconnect();
       window.removeEventListener("resize", resize);
       cancelAnimationFrame(frameRef.current);
     };

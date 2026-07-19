@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { AnimatedSphere } from "./animated-sphere";
@@ -8,22 +8,34 @@ import { AnimatedSphere } from "./animated-sphere";
 const words = ["innovate", "build", "empower", "lead"];
 
 export function HeroSection() {
+  const sectionRef = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [inView, setInView] = useState(true);
   const [wordIndex, setWordIndex] = useState(0);
 
   useEffect(() => {
     setIsVisible(true);
   }, []);
 
+  // Track visibility so the word rotation pauses while scrolled away
   useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      setInView(entry.isIntersecting);
+    });
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!inView) return;
     const interval = setInterval(() => {
       setWordIndex((prev) => (prev + 1) % words.length);
     }, 2500);
     return () => clearInterval(interval);
-  }, []);
+  }, [inView]);
 
   return (
-    <section className="relative min-h-screen flex flex-col justify-center overflow-hidden">
+    <section ref={sectionRef} className="relative min-h-screen flex flex-col justify-center overflow-hidden">
       {/* Animated sphere background */}
       <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[600px] h-[600px] lg:w-[800px] lg:h-[800px] opacity-40 pointer-events-none">
         <AnimatedSphere />

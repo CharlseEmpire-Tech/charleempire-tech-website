@@ -1,10 +1,11 @@
 "use client";
 
-import { use, useState } from "react";
+import { use, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, Clock, Download, Star, Smartphone, Monitor, Apple, Wind } from "lucide-react";
-import { products, getProductById } from "@/lib/products";
+import { Product, Platform } from "@/lib/products";
+import { fetchProducts, fetchProductById } from "@/lib/api/products";
 import { Button } from "@/components/ui/button";
 import { Navigation } from "@/components/landing/navigation";
 import { FooterSection } from "@/components/landing/footer-section";
@@ -25,8 +26,41 @@ const platformIcons: Record<string, React.ReactNode> = {
 
 export default function ProductDetailPage({ params }: ProductDetailPageProps) {
   const { id } = use(params);
-  const product = getProductById(id);
-  const [selectedPlatform, setSelectedPlatform] = useState(product?.platforms[0]);
+  const [product, setProduct] = useState<Product | undefined>();
+  const [allProducts, setAllProducts] = useState<Product[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [selectedPlatform, setSelectedPlatform] = useState<Platform | undefined>();
+
+  useEffect(() => {
+    let cancelled = false;
+    Promise.all([fetchProductById(id), fetchProducts()]).then(
+      ([loadedProduct, loadedProducts]) => {
+        if (cancelled) return;
+        setProduct(loadedProduct);
+        setSelectedPlatform(loadedProduct?.platforms[0]);
+        setAllProducts(loadedProducts);
+        setIsLoading(false);
+      }
+    );
+    return () => {
+      cancelled = true;
+    };
+  }, [id]);
+
+  if (isLoading) {
+    return (
+      <>
+        <Navigation />
+        <main className="min-h-screen bg-background flex items-center justify-center">
+          <div className="flex flex-col items-center gap-4">
+            <div className="w-10 h-10 rounded-full border-2 border-primary/20 border-t-primary animate-spin" />
+            <p className="text-sm text-foreground/50 font-mono">Loading product...</p>
+          </div>
+        </main>
+        <FooterSection />
+      </>
+    );
+  }
 
   if (!product) {
     return (
@@ -262,12 +296,12 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
         </section>
 
         {/* Related Products */}
-        {products.length > 1 && (
+        {allProducts.length > 1 && (
           <section className="relative py-16 lg:py-24 border-b border-primary/10">
             <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
               <h2 className="text-3xl font-display mb-12 text-foreground">Other Products</h2>
               <div className="grid md:grid-cols-2 gap-6">
-                {products
+                {allProducts
                   .filter((p) => p.id !== product.id)
                   .slice(0, 2)
                   .map((relatedProduct) => (

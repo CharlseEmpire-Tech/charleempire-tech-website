@@ -4,14 +4,27 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { products } from "@/lib/products";
+import { Product } from "@/lib/products";
+import { fetchProducts, sortByAvailability } from "@/lib/api/products";
 
 export function ProductsSection() {
   const [isVisible, setIsVisible] = useState(false);
   const [hoveredId, setHoveredId] = useState<string | null>(null);
+  const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
 
   useEffect(() => {
     setIsVisible(true);
+  }, []);
+
+  // Show the top 3 products, available ones first
+  useEffect(() => {
+    let cancelled = false;
+    fetchProducts().then((list) => {
+      if (!cancelled) setFeaturedProducts(sortByAvailability(list).slice(0, 3));
+    });
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   return (
@@ -44,7 +57,7 @@ export function ProductsSection() {
 
         {/* Products grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {products.map((product, index) => (
+          {featuredProducts.map((product, index) => (
             <Link
               key={product.id}
               href={`/product/${product.id}`}

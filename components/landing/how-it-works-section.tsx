@@ -44,12 +44,14 @@ const user = await charlseempire.auth.register({
 export function HowItWorksSection() {
   const [activeStep, setActiveStep] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
+  const [inView, setInView] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) setIsVisible(true);
+        setInView(entry.isIntersecting);
       },
       { threshold: 0.1 }
     );
@@ -58,12 +60,14 @@ export function HowItWorksSection() {
     return () => observer.disconnect();
   }, []);
 
+  // Only rotate steps while the section is on screen
   useEffect(() => {
+    if (!inView) return;
     const interval = setInterval(() => {
       setActiveStep((prev) => (prev + 1) % steps.length);
     }, 5000);
     return () => clearInterval(interval);
-  }, []);
+  }, [inView]);
 
   return (
     <section
