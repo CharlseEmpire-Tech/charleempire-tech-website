@@ -241,17 +241,18 @@ export const products: Product[] = [
       "Stream and discover the best phonk tracks, anywhere",
       "Hang out with the drifter community in a live WhatsApp-style chat",
       "Earn reputation and OG status through join-order badges",
-      "Enjoy a dark, neon red/purple premium experience built with Flutter",
+      "Enjoy a dark, neon red/purple premium visual experience",
     ],
     platforms: [
       {
         id: "phonkdrift-android",
         name: "Android",
         type: "android",
-        version: "1.0.0",
-        size: "55 MB",
+        version: "1.1.0",
+        size: "54 MB",
         requires: "Android 8.0 or later",
-        downloadLink: "#", // TODO: replace with the real Android download link
+        downloadLink:
+          "https://phonkdrift-storage.fra1.cdn.digitaloceanspaces.com/releases/phonkdrift-1.1.0.apk",
       },
       {
         id: "phonkdrift-ios",

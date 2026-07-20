@@ -287,14 +287,10 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
                         asChild
                         className="w-full bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg py-3 font-semibold gap-2 gold-glow-hover"
                       >
-                        <a
-                          href={selectedPlatform.downloadLink || "#"}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
+                        <Link href={`/download/${product.id}?platform=${selectedPlatform.id}`}>
                           <Download className="w-4 h-4" />
                           Download {selectedPlatform.name}
-                        </a>
+                        </Link>
                       </Button>
 
                       <p className="text-xs text-foreground/50 mt-4 text-center">
@@ -365,13 +361,13 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
                   asChild
                   className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3 rounded-lg gold-glow-hover"
                 >
-                  <a
-                    href={product.platforms[0]?.downloadLink || "#"}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <Link
+                    href={`/download/${product.id}${
+                      selectedPlatform ? `?platform=${selectedPlatform.id}` : ""
+                    }`}
                   >
                     Download Now
-                  </a>
+                  </Link>
                 </Button>
               )}
               <Link
