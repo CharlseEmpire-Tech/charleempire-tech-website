@@ -248,11 +248,11 @@ export const products: Product[] = [
         id: "phonkdrift-android",
         name: "Android",
         type: "android",
-        version: "1.1.0",
-        size: "54 MB",
+        version: "1.2.0",
+        size: "55 MB",
         requires: "Android 8.0 or later",
         downloadLink:
-          "https://phonkdrift-storage.fra1.cdn.digitaloceanspaces.com/releases/phonkdrift-1.1.0.apk",
+          "https://phonkdrift-storage.fra1.cdn.digitaloceanspaces.com/releases/phonkdrift-1.2.0.apk",
       },
       {
         id: "phonkdrift-ios",
